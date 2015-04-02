@@ -1,0 +1,118 @@
+﻿@using BugTracker.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+    Layout = null;
+}
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Tracker | Login</title>
+
+    <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-ipad-retina.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-iphone-retina.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-ipad.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-iphone.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+    <!-- bootstrap -->
+    <link href="/css/bootstrap/bootstrap.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/css/font-awesome-4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css" />
+
+
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+
+
+</head>
+    <div id="loading">
+        <div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div id="wrapper" class="login">
+
+    
+
+    <div class="widget-content pad20 clearfix">
+        <span class="center light">Login</span>
+        @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h4>Use a local account to log in.</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                
+                <div class="col-md-10">
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        @Html.LabelFor(m => m.RememberMe)
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Log in" class="btn btn-blue btn-full" />
+                </div>
+            </div>
+        }
+            @using (Html.BeginForm("DemoLogin", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="hidden" value="defaultadmin@fleetinginfinity.com" name="Email" />
+            <input type="hidden" value="aB12345!" name="Password">
+            <input type="hidden" value="false" name="RememberMe" />
+            <input type="submit" value="Demo Log-In" class="btn btn-blue btn-full" />
+        </div>
+        </div>
+        }
+        <p>
+            @Html.ActionLink("Register as a new user", "Register")
+        </p>
+
+        <p>
+            @Html.ActionLink("Forgot your password?", "ForgotPassword")
+        </p>
+
+    </div>	<!-- /widget-content -->
+
+</div>  <!-- /wrapper -->
+
+<div class="clearfix"></div>
+
+
+<script type="text/javascript" src="/js/prefixfree.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/js/jquery.sparkline.min.js"></script>
+<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/jquery.easytabs.min.js"></script>
+<script type="text/javascript" src="/js/excanvas.min.js"></script>
+<script type="text/javascript" src="/js/jquery.flot.js"></script>
+<script type="text/javascript" src="/js/jquery.flot.resize.js"></script>
+
+
+<script type="text/javascript" src="/js/main.js"></script>
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/jqueryval")
+        }

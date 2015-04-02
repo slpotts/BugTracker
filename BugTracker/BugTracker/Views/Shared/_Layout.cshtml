@@ -1,0 +1,76 @@
+﻿@using BugTracker.Models
+@using BugTracker.Stuff
+@using Microsoft.AspNet.Identity
+@{
+
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bug Tracker</title>
+
+    <link rel="apple-touch-icon" sizes="144x144" href="apple-touch-icon-ipad-retina.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="apple-touch-icon-iphone-retina.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="apple-touch-icon-ipad.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="apple-touch-icon-iphone.png" />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+    <!-- bootstrap -->
+    <link href="/css/bootstrap/bootstrap.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/css/font-awesome-4.0.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="/css/toastr.css">
+    
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="~/Content/DataTables-1.10.4/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="~/Content/jquery.custom-scrollbar.css">
+    
+
+</head>
+<body>
+    <div id="loading">
+        <div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <div id="wrapper" class="container">
+
+        @Html.Action("Menu", "Home")
+
+        <div id="main" class="clearfix" style="min-height: 769px;">
+            @RenderBody()
+        </div>
+    </div> <!-- /wrapper -->
+
+
+    <div class="clearfix"></div>
+    <div id="footer">
+        
+    </div>
+
+    <script type="text/javascript" src="/js/prefixfree.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/js/jquery.sparkline.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
+    
+    <script type="text/javascript" src="/js/jquery.easytabs.min.js"></script>
+    <script type="text/javascript" src="/js/excanvas.min.js"></script>
+    
+    <script type="text/javascript" src="/js/toastr.min.js"></script>
+
+    <script type="text/javascript" src="/js/main.js"></script>
+
+    
+    <script type="text/javascript" src="~/Scripts/jquery.custom-scrollbar.js"></script>
+    <script type="text/javascript" src="/Scripts/DataTables-1.10.4/jquery.dataTables.min.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
+

@@ -1,0 +1,24 @@
+﻿@model BugTracker.Models.Users
+
+@using (Html.BeginForm("ProjectUsers", "Projects", FormMethod.Post, new { encType = "multipart/form-data", name = "myform" }))
+{
+    @Html.AntiForgeryToken()
+    
+    @Html.HiddenFor(m => m.ProjectId)
+    <div class="col-md-10">
+        <div class="col-md-5">
+            <div>Assigned</div>
+            @Html.ListBoxFor(m => m.selectedUsers1, Model.assignedUsers as MultiSelectList)
+        </div>
+        <div class="col-md-5">
+            <div>Unassigned</div>
+            @Html.ListBoxFor(m => m.selectedUsers2, Model.unassignedUsers as MultiSelectList)
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save Changes" class="btn btn-default" />
+        </div>
+    </div>
+}

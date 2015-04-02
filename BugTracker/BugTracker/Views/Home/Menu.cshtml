@@ -1,0 +1,151 @@
+﻿@model BugTracker.Models.MenuViewModel
+@using BugTracker.Stuff
+@using Microsoft.AspNet.Identity
+@{Layout = null;}
+
+
+
+<div id="top">
+    <div id="topBar">
+
+            <a class="logo" href="#" title="">
+                <img src="/images/logo.png" rel="logo">
+            </a>
+            <div class="topNav clearfix">
+                @*<input class="topSearch" type="text" placeholder="Search...">*@
+                <ul class="tNav clearfix">
+                    @*<li><a href="#" onclick="return false;"><i class="fa fa-search icon-white"></i></a></li>*@
+                    <li>
+                        <a href="~/TicketNotifications/"><i class="fa fa-comment icon-white"></i></a>
+                        <span class="badge badge-tNav">@Model.ticketNots</span>
+                    </li>
+                    <li>
+                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm"}))
+                        {
+                            @Html.AntiForgeryToken()
+                            <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-times icon-white"></i></a>
+                        }
+                    </li>
+
+                </ul>
+            </div> <!-- /topNav -->
+
+    </div> <!-- /topBar -->
+
+    <div id="profile">
+        <div class="wrapper20">
+            <div class="userInfo">
+                <div class="userTxt">
+                    <span class="fullname">@User.FullName()</span><i class="fa fa-chevron-right"></i><br>
+                    <span class="username"></span>
+                </div>
+            </div> <!-- /userInfo -->
+            <div class="userStats">
+                <div class="uStat">
+                    <div class="stat-name">
+                        Projects <div class="stat-badge">@Model.projects</div>
+                    </div>
+                    <div class="stat-number"></div>
+                </div>
+                <div class="uStat">
+                    <div class="stat-name">
+                        Tickets <div class="stat-badge">@Model.resolvedTicks</div>
+                    </div>
+                    <div class="stat-number"></div>
+                </div>
+
+            </div>
+
+            <i class="fa fa-bars icon-nav-mobile"></i>
+
+        </div>
+    </div> <!-- /profile -->
+</div> <!-- /top -->
+
+<div id="sidebar">
+    <ul class="mainNav">
+        @if (ViewBag.Title == "Home Page")
+        {
+            <li class="active">
+                <a href="~/"><i class="fa fa-user"></i><br>Dashboard</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="~/"><i class="fa fa-user"></i><br>Dashboard</a>
+            </li>
+        }
+        @if (ViewBag.Title == "Tickets")
+        {
+            <li class="active">
+                <a href="~/Tickets/"><i class="fa fa-paperclip"></i><br>Tickets</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="~/Tickets/"><i class="fa fa-paperclip"></i><br>Tickets</a>
+            </li>
+        }
+        @if (User.IsInRole("Administrator"))
+        {
+            if (ViewBag.Title == "Roles")
+            {
+                <li class="active">
+                    <a href="~/RoleManagement/ListRoles"><i class="fa fa-tasks"></i><br>Manage Roles</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href="~/RoleManagement/ListRoles"><i class="fa fa-tasks"></i><br>Manage Roles</a>
+                </li>
+            }
+        }
+        @if (ViewBag.Title == "Notifications")
+        {
+            <li class="active">
+                <a href="~/TicketNotifications/"><i class="fa fa-comments"></i><br>Notifications</a>
+                <span class="badge badge-mNav">@Model.ticketNots</span>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="~/TicketNotifications/"><i class="fa fa-comments"></i><br>Notifications</a>
+                <span class="badge badge-mNav">@Model.ticketNots</span>
+            </li>
+        }
+        @if (ViewBag.Title == "Profile")
+        {
+            <li class="active">
+                <a href="~/Manage/"><i class="fa fa-bar-chart-o"></i><br>User Profile</a>
+            </li>
+        }
+        else
+        {
+            <li>
+                <a href="~/Manage/"><i class="fa fa-bar-chart-o"></i><br>User Profile</a>
+            </li>
+        }
+        @if (User.IsInRole("Administrator") || User.IsInRole("Project Manager"))
+        {
+            if (ViewBag.Title == "Projects")
+            {
+                <li class="active">
+                    <a href="~/Projects/"><i class="fa fa-th"></i><br>Projects</a>
+                </li>
+            }
+            else
+            {
+                <li>
+                    <a href="~/Projects/"><i class="fa fa-th"></i><br>Projects</a>
+                </li>
+            }
+        }
+        <li>
+            <a href="~/Account/Login"><i class="fa fa-key"></i><br>Login</a>
+        </li>
+    </ul>
+</div> <!-- /sidebar -->

@@ -1,0 +1,267 @@
+﻿@model BugTracker.Models.Ticket
+
+@{
+    ViewBag.Title = "Tickets";
+}
+<div class="col-md-offset-1" style="padding-top: 25px;">
+    @Html.ActionLink("Edit Ticket", "Edit", new { id = Model.Id })
+</div>
+<div class="row" style="padding-top: 15px;">
+    
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-primary">
+            
+            <div class="panel-heading">
+                <h2><b>Ticket Details</b></h2>
+            </div>
+            <div class="panel-body">
+            <div class="col-md-5"><dl class="dl-horizontal">
+    <dt>
+        Assigned User
+    </dt>
+
+    <dd>
+        @Html.DisplayFor(model => model.AssignedUser.FirstName) @Html.DisplayFor(model => model.AssignedUser.LastName)
+    </dd>
+
+    <dt>
+        <br />
+        Submitter
+    </dt>
+
+    <dd>
+        <br />
+        @Html.DisplayFor(model => model.Submitter.FirstName) @Html.DisplayFor(model => model.Submitter.LastName)
+    </dd>
+
+    <dt>
+        <br />
+        @Html.DisplayNameFor(model => model.Created)
+    </dt>
+
+    <dd>
+        <br />
+        @Html.DisplayFor(model => model.Created)
+    </dd>
+
+    <dt>
+        <br />
+        @Html.DisplayNameFor(model => model.Updated)
+    </dt>
+
+    <dd>
+        <br />
+        @Html.DisplayFor(model => model.Updated)
+    </dd>
+
+</dl></div>
+            <div class="col-md-5">
+                <dl class="dl-horizontal">
+
+    <dt>
+        Project
+    </dt>
+    <dd>
+        @Html.DisplayFor(model => model.Project.Name)
+    </dd>
+                    <dt>
+                        <br />
+                        Ticket Priority
+                    </dt>
+
+                    <dd>
+                        <br />
+                        @Html.DisplayFor(model => model.TicketPriority.Name)
+                    </dd>
+
+                    <dt>
+                        <br />
+                        Ticket Status
+                    </dt>
+
+                    <dd>
+                        <br />
+                        @Html.DisplayFor(model => model.TicketStatus.Name)
+                    </dd>
+                    <dt>
+                        <br />
+                        Ticket Type
+                    </dt>
+
+                    <dd>
+                        <br />
+                        @Html.DisplayFor(model => model.TicketType.Name)
+                    </dd>
+
+</dl>
+            </div>
+            <div class="row"><p></p></div>
+            <div class="row">
+
+            <dl class="dl-horizontal">
+                <dt>
+                    <br />
+                    @Html.DisplayNameFor(model => model.Title)
+                </dt>
+
+                <dd>
+                    <br />
+                    @Html.DisplayFor(model => model.Title)
+                </dd>
+                <dt>
+                    <br />
+                    @Html.DisplayNameFor(model => model.Description)
+                </dt>
+
+                <dd>
+                    <br />
+                    @Html.DisplayFor(model => model.Description)
+                </dd>
+            </dl>
+                </div>    
+            <p></p>
+                <div><h4><b>Ticket History</b></h4></div>
+                <div>
+                    <table class="table" id="myTicketHTable">
+                        <thead>
+                        <tr>
+                            <th>
+                                Property
+                            </th>
+                            <th>
+                                Old Value
+                            </th>
+                            <th>
+                                New Value
+                            </th>
+                        </tr>
+                            </thead>
+                        <tbody></tbody>
+
+                        @*foreach (var item in Model.TicketHistories)
+                        {
+                            <tr>
+                                <td>@item.Property</td>
+                                <td>@item.OldValue</td>
+                                <td>@item.NewValue</td>
+                            </tr>
+                        }*@
+
+                    </table>
+                </div>
+            
+                <div><h4><b>Ticket Comments</b></h4><hr /></div>
+                <div id="ticketComments" class="modern-skin" style="height:200px;">
+                    @foreach (var comment in Model.TicketComments)
+                    {
+                        <div class="comment">
+                            <div class="comment-header">
+                                <div class="comment-person">
+                                    <div class="comment-hex hex-yellow"></div>
+                                </div>
+                                <div class="comment-info">
+                                    <div class="c-name">@comment.User.FirstName @Html.Raw(" ") @comment.User.LastName</div>
+                                    <div class="c-time">@comment.Created</div>
+                                </div>
+                            </div> <!-- /comment-header -->
+
+                            <div class="comment-text">
+                                @comment.Comment
+                            </div>
+                        </div>
+                        <br />
+                        <br /><br />
+                    }</div>
+                    <div>
+                        @using (Html.BeginForm("SubmitComment", "Tickets", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            @Html.Hidden("TicketId", Model.Id)
+
+
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <textarea name="Comment" class="col-md-6" id="textAreaMessage" style="color:black"></textarea><input type="submit" class="btn btn-default" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-md-10">
+
+                                </div>
+                            </div>
+                        }
+                </div>
+            </div><div class="panel-body">
+                <div><h4><b>Ticket Attachments</b></h4><hr /></div>
+                <div class="col-md-offset-1">
+                    @foreach (var attachment in Model.TicketAttachments)
+                    {
+                        <a href="@attachment.FileUrl">@attachment.Description</a>
+                    }
+                    <p><br /></p>
+                </div>
+                <div>
+    <div class="col-md-10">
+        @using (Html.BeginForm("TicketAttachment", "Tickets", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.Hidden("TicketId", Model.Id)
+
+            <input name="attachment" type="file" id="fileUpload" />
+            @Html.ValidationMessage("attachment", new { @class = "text-danger" })
+            
+            <label>Description</label><br />
+            <textarea name="Description" class="col-md-6"></textarea>
+            @Html.ValidationMessage("Description", new { @class = "text-danger" })
+            <input type="submit" class="btn btn-default" />
+        }
+</div></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+                <div class="col-md-offset-1"><p>
+                    @Html.ActionLink("Back to List", "Index")
+                </p></div>
+@section Scripts {
+    <script type="text/javascript" language="javascript">
+                        $(document).ready(function () {
+                            $('#myTicketHTable').dataTable({
+                                "serverSide": true,
+                                "ajax": "/Tickets/GetTHAjaxData",
+                                "processing": true,
+                                "pageLength": 5,
+                                "lengthMenu": [5, 10, 25],
+                                "columns": [
+                                { "data": "Property" },
+                                { "data": "OldValue" },
+                                { "data": "NewValue" }
+                                ]
+                            });
+
+                            $('fileUpload').bind('change', function () {
+                                if (this.files[0].size > 4 * 1024 * 1024) {
+                                    alert("File is larger than 4Mb, please choose a smaller one.")
+                                    try {
+                                        this.value = '';
+                                        if (this.value) {
+                                            this.type = "text";
+                                            this.type = "file";
+                                        }
+                                    } catch (e) { }
+                                }
+                            });
+                            
+                            $('#ticketComments').customScrollbar();
+
+
+                        });
+    </script>
+}

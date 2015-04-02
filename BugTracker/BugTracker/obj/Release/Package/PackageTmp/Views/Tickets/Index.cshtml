@@ -1,0 +1,66 @@
+﻿@model BugTracker.Models.Ticket
+
+@{
+    ViewBag.Title = "Tickets";
+}
+
+<div class="row" style="padding-top: 15px;">
+
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-primary">
+
+            <div class="panel-heading">
+                <h2>Tickets</h2>
+                </div>
+            <div style="padding-top: 10px;">
+                <table id="myTicketTable" class="table-responsive">
+                    <thead>
+                        <tr>
+                            <th>
+                                Title
+                            </th>
+                            <th>
+                                Description
+                            </th>
+                            <th>
+                                Priority
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Type
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<div class="col-md-offset-1">
+    @Html.ActionLink("Create New Ticket", "Create")
+</div>
+
+                @section Scripts {
+                    <script type="text/javascript" language="javascript">
+                        $(document).ready(function () {
+                            $('#myTicketTable').dataTable({
+                                "serverSide": true,
+                                "ajax": "/Tickets/GetTAjaxData",
+                                "processing": true,
+                                "columns": [
+                                { "data": "Title" },
+                                { "data": "Description" },
+                                { "data": "Priority" },
+                                { "data": "Status" },
+                                { "data": "Type" }
+                                ]
+                            });
+
+
+                        });
+                    </script>
+                }

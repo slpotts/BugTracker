@@ -1,0 +1,141 @@
+﻿@using BugTracker.Models
+@{
+    ViewBag.Title = "Home Page";
+    int[] resolved = TempData["Resolved"] as int[];
+    int[] unResolved = TempData["Unresolved"] as int[];
+    string[] projectNames = TempData["ProjectName"] as string[];
+    int num = 0;
+}
+
+
+    <div class="topTabs">
+
+        <div id="topTabs-container-home">
+            <div class="topTabs-header clearfix">
+
+                <div class="secInfo sec-dashboard">
+                    <h1 class="secTitle">Dashboard</h1>
+                    <span class="secExtra">Welcome</span>
+                </div> <!-- /SecInfo -->
+
+                <ul class="etabs tabs">
+                    <li class="tab">
+                        <a href="#tab1">
+                            <span class="to-hide">
+                                <i class="fa fa-th"></i><br>Tickets
+                            </span>
+                            <i class="fa icon-hidden fa-th ttip" data-ttip="Tickets"></i>
+                        </a>
+                    </li>
+                    <li class="tab">
+                        <a href="#tab2">
+                            <span class="to-hide">
+                                <i class="fa fa-th"></i><br>Projects
+                            </span>
+                            <i class="fa icon-hidden fa-calendar ttip" data-ttip="Projects"></i>
+                        </a>
+                    </li>
+                </ul> <!-- /tabs -->
+            </div><!-- /topTabs-header -->
+
+            <div class="topTabsContent">
+                <div id="tab1">
+                    <table id="myDataTable" class="table-responsive">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Title
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+                                <th>
+                                    Priority
+                                </th>
+                                <th>
+                                    Status
+                                </th>
+                                <th>
+                                    Type
+                                </th>
+                                <th>
+
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div id="tab2">
+                    @foreach (var project in projectNames)
+                    {
+                        <div class="row" style="margin-top:10px;">
+                            <div class="col-xs-10">
+                                <div class="col-xs-6" style="">
+                                    <h4>@project</h4>
+                                    <div>
+    <p><div class="row" style="background:blue; width:10px; height:10px; display:inline-block"></div><div class="row" style="display:inline-block; margin-left: 18px;"> Resolved Tickets</div></p>
+    <p><div class="row" style="background:red; width:10px; height:10px; display:inline-block"></div><div class="row" style="display:inline-block; margin-left: 18px;"> Unresolved Tickets</div></p>
+                                </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div id="sts_6" class="sprk pull-right" values="@resolved[num], @unResolved[num]"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            
+                            
+                        </div>
+                        <p></p>
+                        
+                        {
+                            num++;
+                        }
+                    }
+                    
+                </div>
+            </div> <!-- /topTabContent -->
+
+        </div> <!-- /tab-container -->
+        <!-- </div> -->
+    </div> <!-- /topTabs -->
+
+    <div class="divider"></div>
+
+    
+
+@section Scripts {
+<script type="text/javascript" language="javascript">
+    $(document).ready(function () {
+        $('#myDataTable').dataTable({
+            "serverSide": true,
+            "ajax": "/Home/GetAjaxData",
+            "processing": true,
+            "dom": '<"top">rt<"bottom"><"clear">',
+            "columns": [
+                { "data": "Title" },
+                { "data": "Description" },
+                { "data": "Priority" },
+                { "data": "Status" },
+                { "data": "Type" }
+            ],
+            "columnDefs": [{ "targets": [0, 1, 2, 3, 4], "orderable": false }]
+        });
+
+        $('#sts_6').sparkline('html', {
+            type: 'pie',
+            height: '120px',
+            tooltipClassname: 'tooltip-sp',
+            targetColor: '#e86f56',
+            tooltipFormat: '{{offset:offset}} ({{percent.1}}%)',
+            tooltipValueLookups: {
+                'offset': {
+                    0: 'Resolved',
+                    1: 'Unresolved'
+                }
+                
+            }
+        });
+    });
+</script>
+}

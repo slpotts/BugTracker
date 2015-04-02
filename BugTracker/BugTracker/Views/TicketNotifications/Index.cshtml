@@ -1,0 +1,47 @@
+﻿@model IEnumerable<BugTracker.Models.TicketNotification>
+
+@{
+    ViewBag.Title = "Notifications";
+}
+<div class="row" style="padding-top: 15px;">
+
+    <div class="col-md-10 col-md-offset-1">
+        <div class="panel panel-primary">
+
+            <div class="panel-heading" style="background-color:grey;">
+                <h2><i class="fa fa-comments"></i><b>  Ticket Notifications</b></h2>
+</div>
+            <div class="panel-body">
+
+                <table class="table">
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @if (item.Seen == false)
+                                {
+                                    <a href="/Tickets/Details/@item.TicketId">
+                                        <div style="background-color: blue; width:100%; height: 26px; color: white">
+                                            <h4 style="padding-left:2px; padding-top:1px;"><b>@Html.DisplayFor(modelItem => item.Ticket.Title)</b></h4>
+                                        </div>
+                                    </a>
+                                }
+                                @if (item.Seen == true)
+                                {
+                                    <a href="/Tickets/Details/@item.TicketId">
+                                        <div style="width:100%; height: 26px; color: black">
+                                            <h4 style="padding-left:2px; padding-top:1px;"><b>@Html.DisplayFor(modelItem => item.Ticket.Title)</b></h4>
+                                        </div>
+                                    </a>
+                                }
+                                                                
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
